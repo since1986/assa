@@ -14,7 +14,7 @@ public record Event(Dialogue... items) {
 
         return """
                 [Events]
-                Format: Marked, Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
+                Format: Layer, Start, End, Style, Name, MarginL, MarginR, MarginV, Effect, Text
                 %s
                 """.formatted(collected);
     }

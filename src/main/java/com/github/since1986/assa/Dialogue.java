@@ -3,10 +3,8 @@ package com.github.since1986.assa;
 import lombok.Builder;
 
 import java.time.LocalTime;
-import java.time.format.DateTimeFormatterBuilder;
+import java.time.format.DateTimeFormatter;
 import java.util.Optional;
-
-import static java.time.temporal.ChronoField.*;
 
 @Builder
 public final class Dialogue {
@@ -15,7 +13,9 @@ public final class Dialogue {
      * Marked
      * Marked=0 means the line is not shown as "marked" in SSA.
      * Marked=1 means the line is shown as "marked" in SSA.
+     * @deprecated
      */
+    @Deprecated
     @Builder.Default
     private boolean marked = false;
 
@@ -97,19 +97,9 @@ public final class Dialogue {
 
     @Override
     public String toString() {
-        var formatter = new DateTimeFormatterBuilder().appendValue(HOUR_OF_DAY, 1)
-                .appendLiteral(':')
-                .appendValue(MINUTE_OF_HOUR, 2)
-                .optionalStart()
-                .appendLiteral(':')
-                .appendValue(SECOND_OF_MINUTE, 2)
-                .optionalStart()
-                .appendLiteral('.')
-                .appendFraction(MILLI_OF_SECOND, 0, 2, true)
-                .toFormatter();
+        var formatter = DateTimeFormatter.ofPattern("H:mm:ss.SS");
 
-        return "Dialogue: %d,%d,%s,%s,%s,%s,%d,%d,%d,%s,%s".formatted(
-                marked ? 0 : 1,
+        return "Dialogue: %d,%s,%s,%s,%s,%d,%d,%d,%s,%s".formatted(
                 layer,
                 Optional.ofNullable(start).map(v -> v.format(formatter)).orElse(""),
                 Optional.ofNullable(end).map(v -> v.format(formatter)).orElse(""),

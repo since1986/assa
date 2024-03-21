@@ -95,7 +95,8 @@ public final class ScriptInfo {
      * 2: no word wrapping, \n \N both breaks
      * 3: same as 0, but lower line gets wider.
      */
-    private WrapStyle wrapStyle;
+    @Builder.Default
+    private WrapStyle wrapStyle = WrapStyle.SMART;
 
     @Override
     public String toString() {

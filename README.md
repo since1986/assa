@@ -71,13 +71,13 @@ Create a 10-minute test video: Use the command to generate a test video with a d
 ffmpeg -f lavfi -i testsrc=duration=600:size=1280x720:rate=30 -f lavfi -i sine=frequency=1000:duration=600 -c:v libx264 -c:a aac -strict experimental input.mp4
 ```
 
-Combine the ASSA file generated from the example above with the video file to create an MKV file with hard subtitles: Execute the command.
+Combine the ASSA file generated from the example above with the video file to create an mp4 file with hard subtitles: Execute the command.
 
 ```shell
 ffmpeg -i input.mp4 -vf "subtitles=input.ass" -threads 4 -c:v libx264 -c:a copy output.mp4
 ```
 
-Play the resulting MKV file in VLC to check the effects.
+Play the resulting mp4 file in VLC to check the effects.
 
 <img src="src/test/resources/test-subtitle.webp" alt="vlc play">
 

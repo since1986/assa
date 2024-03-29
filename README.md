@@ -30,43 +30,39 @@ You can add this library to your project as a dependency via Maven:
 Here is a simple example of how to create a ASSA:
 
 ```java
-var start = LocalTime.of(0, 0, 0);
-var random = new Random();
-var dialogues = new ArrayList<Dialogue>();
-for(
-int i = 0;
-i< 2000;i++){
-var end = start.plus(200, ChronoUnit.MILLIS);
-var payload = "测试条目-%s\\N另一行: %s\\N又一行: %s".formatted(
-        i,
-        random.nextDouble(999.999),
-        random.nextDouble(999.999)
-);
-var dialogue = Dialogue.builder()
-        .start(start)
-        .end(end)
-        .tex(payload)
-        .build();
-    dialogues.
-
-add(dialogue);
-
-start =end;
+void genSubtitle() throws IOException {
+    var start = LocalTime.of(0, 0, 0);
+    var random = new Random();
+    var dialogues = new ArrayList<Dialogue>();
+    for (
+            int i = 0;
+            i < 2000; i++) {
+        var end = start.plus(200, ChronoUnit.MILLIS);
+        var payload = "测试条目-%s\\N另一行: %s\\N又一行: %s".formatted(
+                i,
+                random.nextDouble(999.999),
+                random.nextDouble(999.999)
+        );
+        var dialogue = Dialogue.builder()
+                .start(start)
+                .end(end)
+                .tex(payload)
+                .build();
+        dialogues.
+                add(dialogue);
+        start = end;
+    }
+    var advancedSubStationAlpha = new AdvancedSubStationAlpha(
+            ScriptInfo.builder().build(),
+            Style.builder()
+                    .fontsize(12)
+                    .primaryColour("&H000000FF")
+                    .alignment(Style.Alignment.RIGHT_BOTTOM)
+                    .build(),
+            new Event(dialogues.toArray(new Dialogue[]{}))
+    );
+    Files.writeString(Path.of("input.ass"), advancedSubStationAlpha.toString(), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
 }
-var advancedSubStationAlpha = new AdvancedSubStationAlpha(
-        ScriptInfo.builder().build(),
-        Style.builder()
-                .fontsize(12)
-                .primaryColour("&H000000FF")
-                .alignment(Style.Alignment.RIGHT_BOTTOM)
-                .build(),
-        new Event(dialogues.toArray(new Dialogue[]{}))
-);
-Files.
-
-writeString(Path.of("input.ass"),advancedSubStationAlpha.
-
-toString(),StandardOpenOption.CREATE,StandardOpenOption.TRUNCATE_EXISTING);
 ```
 
 Create a 10-minute test video: Use the command to generate a test video with a duration of 10 minutes.
